@@ -1,0 +1,26 @@
+{
+  "name": "reika-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "Zetari",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "discord.js": "^11.4.2",
+    "dotenv": "^7.0.0",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "quick.db": "^7.0.0-b21",
+    "randomcolor": "^0.5.3",
+    "readdirp": "^2.2.1",
+    "sylphy": "^0.4.5",
+    "util": "^0.11.1"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}
