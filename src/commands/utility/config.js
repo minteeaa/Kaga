@@ -9,18 +9,27 @@ class config extends Command {
       cooldown: 2,
       options: { guildOnly: true, requirements: { permissions: { administrator: true } } },
       usage: [
-        { name: 'member', displayName: 'member', type: 'member', optional: true }
+        { name: 'category', displayName: 'category', type: 'string', optional: true },
+        { name: 'option', displayName: 'option', type: 'string', optional: true },
+        { name: 'params', displayName: 'params', type: 'string', optional: true }
       ]
     })
   }
   handle ({ args, client, msg }, responder) {
+    const logtypes = [
+      'kick',
+      'ban'
+    ]
     const color = parseInt(randomColor().replace(/#/gi, '0x'))
+    const category = args.category
+    let params = args.params
+    const option = args.option
     let kickLog
-    if (db.get(`klog_${msg.channel.guild.id}`) === null) kickLog = 'None'
-    else kickLog = `<#${db.get(`klog_${msg.channel.guild.id}`)}>`
+    if (db.get(`kicklog_${msg.channel.guild.id}`) === null) kickLog = 'None'
+    else kickLog = `<#${db.get(`kicklog_${msg.channel.guild.id}`)}>`
     let banLog
-    if (db.get(`blog_${msg.channel.guild.id}`) === null) banLog = 'None'
-    else banLog = `<#${db.get(`blog_${msg.channel.guild.id}`)}>`
+    if (db.get(`banlog_${msg.channel.guild.id}`) === null) banLog = 'None'
+    else banLog = `<#${db.get(`banlog_${msg.channel.guild.id}`)}>`
     const embed = {
       'embed': {
         'color': color,
@@ -44,7 +53,26 @@ class config extends Command {
         ]
       }
     }
-    client.createMessage(msg.channel.id, embed)
+    if (!category) client.createMessage(msg.channel.id, embed)
+    if (category === 'logs') {
+      if (!option) {
+        client.createMessage(msg.channel.id, embed)
+      } else if (logtypes.includes(option)) {
+        params = msg.channelMentions
+        console.log(category + ' ' + option + ' ' + params)
+        if (!params) {
+          return responder
+            .format(['emoji:negative_squared_check_mark'])
+            .send('No valid input detected!')
+        } else if (params !== undefined) {
+          params = msg.channelMentions[0]
+          db.set(`${option}log_${msg.channel.guild.id}`, params)
+          responder
+            .format(['emoji:emoji:white_check_mark'])
+            .send(`${option} log set to <#${params}>`)
+        }
+      }
+    }
   }
 }
 

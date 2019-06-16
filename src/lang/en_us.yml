@@ -1,0 +1,9 @@
+rsuccess: <:success:589489715905036289>
+rquestion: <:question:589499527518486538>
+rdeny: <:deny:589500870765445177>
+bannoperms: This requires you to have the `Ban Members` permission!
+bannospecify: You didn't specify anyone to ban!
+banself: Why would you want to ban yourself?
+bannotvalid: No valid user specified!
+banbot: You tried to ban me, but ultimately failed.
+bansuccess: $USER has been banned.

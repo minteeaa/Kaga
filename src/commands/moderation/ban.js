@@ -1,5 +1,8 @@
 const { Command } = require('sylphy')
 const randomColor = require('randomcolor')
+const yaml = require('js-yaml')
+const fs = require('fs')
+const lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
 
 class ban extends Command {
   constructor (...args) {
@@ -8,7 +11,7 @@ class ban extends Command {
       cooldown: 2,
       options: { guildOnly: true, requirements: { permissions: { banMembers: true } } },
       usage: [
-        { name: 'member', displayName: 'member', type: 'member', optional: true },
+        { name: 'member', displayName: 'member', type: 'string', optional: true, last: true },
         { name: 'purge', displayName: 'msgPupurgerge', type: 'int', min: 0, max: 7, optional: true },
         { name: 'reason', displayName: 'reason', type: 'string', optional: true, last: true }
       ]
@@ -20,30 +23,19 @@ class ban extends Command {
     const member = args.member
     const purge = args.purge
     const reason = args.reason
+    let user
+    if (msg.mentions.length > 0) user = msg.channel.guild.members.get(msg.mentions[0].id)
     const db = require('quick.db')
-    if (!msg.member.permission.has('banMembers')) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('This requires you to have a role that can ban members.')
-    } else if (!member) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('There was no member specified to ban!')
-    } else if (member.id === msg.author.id) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('Why would you want to ban yourself?')
-    } else if (member.id === client.user.id) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('You tried to ban me, but ultimately failed.')
-    } else {
+    if (!msg.member.permission.has('banMembers')) return responder.send(`${lang.rdeny} ${lang.bannoperms}`)
+    else if (!member) return responder.send(`${lang.rquestion} ${lang.bannospecify}`)
+    else if (!msg.mentions[0]) return responder.send(`${lang.deny} ${lang.bannotvalid}`)
+    else if (user.id === msg.author.id) return responder.send(`${lang.rquestion} ${lang.bannospecify}`)
+    else if (user.id === client.user.id) return responder.send(`${lang.deny} ${lang.banbot}`)
+    else {
       try {
-        await msg.channel.guild.banMember(member.id, purge, reason)
-        responder
-          .format(['emoji:white_check_mark'])
-          .send(`${member.user.username}#${member.user.discriminator} has been banned.`)
-        if (msg.guild.channels.get(db.get(`blog_${msg.channel.guild.id}`)) !== undefined) {
+        await msg.channel.guild.banMember(user.id, purge, reason)
+        responder.send(`${lang.rsuccess} ${lang.bansuccess.replace('$USER', `**${user.username}#${user.discriminator}**`)}`)
+        if (msg.guild.channels.get(db.get(`banlog_${msg.channel.guild.id}`)) !== undefined) {
           responder.send(' ', { embed: {
             color: color,
             title: 'Member Ban',

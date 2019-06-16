@@ -12,7 +12,6 @@ class sayd extends Command {
     })
   }
   handle ({ args, client, msg }, responder) {
-    responder.typing()
     responder.send(args.text)
     msg.delete(msg.author)
   }

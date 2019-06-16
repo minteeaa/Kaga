@@ -43,7 +43,7 @@ class kick extends Command {
         responder
           .format(['emoji:white_check_mark'])
           .send(`${member.user.username}#${member.user.discriminator} has been kicked.`)
-        if (msg.guild.channels.get(db.get(`klog_${msg.channel.guild.id}`)) !== undefined) {
+        if (msg.guild.channels.get(db.get(`kicklog_${msg.channel.guild.id}`)) !== undefined) {
           responder.send(' ', { embed: {
             color: color,
             title: 'Member Kick',

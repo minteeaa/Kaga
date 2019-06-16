@@ -16,7 +16,7 @@ const logger = bot.logger
 
 logger.debug([
   'Reika v2 running',
-  'With some cool new logging!'
+  'With some cool logging!'
 ].join('\n'))
 logger.error(new Error('Error test'))
 
@@ -36,3 +36,5 @@ process.on('unhandledRejection', (reason, promise) => {
   if (typeof reason === 'undefined') return
   logger.error(`Unhandled rejection: ${reason} - ${util.inspect(promise)}`)
 })
+
+// ᵛ²

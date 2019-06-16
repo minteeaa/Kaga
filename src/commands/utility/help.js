@@ -26,7 +26,7 @@ class help extends Command {
         },
         'author': {
           'name': `${client.user.username}'s commands`,
-          'url': 'https://docs.zetari.xyz',
+          'url': 'https://docs.zetari.xyz/reika/info',
           'icon_url': client.user.avatarURL
         },
         'fields': [

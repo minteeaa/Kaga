@@ -13,6 +13,8 @@
     "discord.js": "^11.4.2",
     "dotenv": "^7.0.0",
     "fs": "0.0.1-security",
+    "js-yaml": "^3.13.1",
+    "nodemon": "^1.19.1",
     "path": "^0.12.7",
     "quick.db": "^7.0.0-b21",
     "randomcolor": "^0.5.3",
