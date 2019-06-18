@@ -1,4 +1,7 @@
 const { Command } = require('sylphy')
+const yaml = require('js-yaml')
+const fs = require('fs')
+let lang
 
 class prefix extends Command {
   constructor (...args) {
@@ -7,16 +10,18 @@ class prefix extends Command {
       cooldown: 10,
       options: { guildOnly: true },
       usage:
-      { name: 'prefix', displayName: 'prefix', type: 'string', optional: false, last: true }
+      { name: 'prefix', displayName: 'prefix', type: 'string', optional: true, last: true }
     })
   }
 
   handle ({ args, client, msg }, responder) {
     const db = require('quick.db')
-    db.set(`prefix_${msg.channel.guild.id}`, args.prefix)
-    responder
-      .format(['emoji:emoji:white_check_mark'])
-      .send(`prefix changed to \`${args.prefix}\``)
+    if (db.get(`serverLang_${msg.channel.guild.id}`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
+    if (!args.prefix) return responder.send(`${lang.rquestion} ${lang.prefixnospecify}`)
+    else {
+      db.set(`prefix_${msg.channel.guild.id}`, args.prefix)
+      responder.send(`${lang.rsuccess} ${lang.prefixchanged.replace('$PREFIX', args.prefix)}`)
+    }
   }
 }
 

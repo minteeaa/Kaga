@@ -5,18 +5,14 @@ module.exports = {
     const { client, msg, commands } = container
     const isPrivate = container.isPrivate = !msg.channel.guild
     /* eslint-enable */
+    if (!msg.channel.guild) return Promise.resolve()
     const db = require('quick.db')
     let pre = db.fetch(`prefix_${msg.channel.guild.id}`)
     let prefix
-    if (!pre) {
-      prefix = '-!'
-    } else {
-      prefix = pre
-    }
+    if (!pre) prefix = '-!'
+    else prefix = pre
 
-    if (!msg.content.startsWith(prefix)) {
-      return Promise.resolve()
-    }
+    if (!msg.content.startsWith(prefix)) return Promise.resolve()
 
     const rawArgs = msg.content.substring(prefix.length).split(' ')
     const trigger = container.trigger = rawArgs[0].toLowerCase()

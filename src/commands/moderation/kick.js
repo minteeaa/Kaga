@@ -1,5 +1,9 @@
 const { Command } = require('sylphy')
+const db = require('quick.db')
 const randomColor = require('randomcolor')
+const yaml = require('js-yaml')
+const fs = require('fs')
+let lang
 
 class kick extends Command {
   constructor (...args) {
@@ -16,56 +20,31 @@ class kick extends Command {
   }
 
   async handle ({ args, client, msg }, responder) {
+    if (db.get(`serverLang_${msg.channel.guild.id}`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
     const color = parseInt(randomColor().replace(/#/gi, '0x'))
     const member = args.member
     const purge = args.purge
     const reason = args.reason
-    const db = require('quick.db')
-    if (!msg.member.permission.has('kickMembers')) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('This requires you to have a role that can kick members.')
-    } else if (!member) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('There was no member specified to kick!')
-    } else if (member.id === msg.author.id) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('Why would you want to kick yourself?')
-    } else if (member.id === client.user.id) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('You tried to kick me, but ultimately failed.')
-    } else {
+    let user
+    if (msg.mentions.length > 0) user = msg.channel.guild.members.get(msg.mentions[0].id)
+    if (!msg.member.permission.has('kickMembers')) return responder.send(`${lang.rdeny} ${lang.kicknoperms}`)
+    else if (!member) return responder.send(`${lang.rquestion} ${lang.kicknospecify}`)
+    else if (!msg.mentions[0]) return responder.send(`${lang.rdeny} ${lang.kicknotvalid}`)
+    else if (user.id === msg.author.id) return responder.send(`${lang.rquestion} ${lang.kickself}`)
+    else if (user.id === client.user.id) return responder.send(`${lang.rdeny} ${lang.kickbot}`)
+    else {
       try {
-        await msg.channel.guild.kickMember(member.id, purge, reason)
-        responder
-          .format(['emoji:white_check_mark'])
-          .send(`${member.user.username}#${member.user.discriminator} has been kicked.`)
-        if (msg.guild.channels.get(db.get(`kicklog_${msg.channel.guild.id}`)) !== undefined) {
-          responder.send(' ', { embed: {
+        await msg.channel.guild.kickMember(user.id, purge, reason)
+        responder.send(`${lang.rsuccess} ${lang.kicksuccess.replace('$USER', `**${user.username}#${user.discriminator}**`)}`)
+        if (msg.guild.channels.get(db.get(`kickLog_${msg.channel.guild.id}`)) != null) {
+          client.createMessage(msg.guild.channels.get(db.get(`kickLog_${msg.channel.guild.id}`)), { embed: {
             color: color,
             title: 'Member Kick',
-            thumbnail: {
-              url: member.user.avatarURL
-            },
-            fields: [{
-              name: 'User',
-              value: `${member.user.username}#${member.user.discriminator}`
-            },
-            {
-              name: 'ID',
-              value: member.user.id
-            },
-            {
-              name: 'Reason',
-              value: `${reason === null ? 'None' : reason}`
-            },
-            {
-              name: 'Staff Member',
-              value: msg.author.mention
-            }],
+            thumbnail: { url: member.user.avatarURL },
+            fields: [{ name: 'User', value: `${member.user.username}#${member.user.discriminator}` },
+              { name: 'ID', value: member.user.id },
+              { name: 'Reason', value: `${reason == null ? 'None' : reason}` },
+              { name: 'Staff Member', value: msg.author.mention }],
             timestamp: new Date()
           } })
         }
@@ -84,7 +63,7 @@ class kick extends Command {
 
 module.exports = kick
 module.exports.help = {
-  description: 'Kick a user from the server.',
-  usage: 'kick <user>',
+  description: 'kick a user from the server.',
+  usage: 'kick <user> [purge messages] [reason]',
   group: 'moderation'
 }

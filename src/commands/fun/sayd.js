@@ -1,4 +1,8 @@
 const { Command } = require('sylphy')
+const db = require('quick.db')
+const yaml = require('js-yaml')
+const fs = require('fs')
+let lang
 
 class sayd extends Command {
   constructor (...args) {
@@ -7,13 +11,17 @@ class sayd extends Command {
       cooldown: 3,
       options: { guildOnly: true },
       usage: [
-        { name: 'text', displayName: 'text', type: 'string', optional: false, last: true }
+        { name: 'text', displayName: 'text', type: 'string', optional: true, last: true }
       ]
     })
   }
   handle ({ args, client, msg }, responder) {
-    responder.send(args.text)
-    msg.delete(msg.author)
+    if (db.get(`serverLang_${msg.channel.guild.id}`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
+    if (!args.text) return responder.send(`${lang.rquestion} ${lang.say[Math.floor(Math.random() * lang.say.length)]}`)
+    else {
+      responder.send(args.text)
+      msg.delete(msg.author)
+    }
   }
 }
 

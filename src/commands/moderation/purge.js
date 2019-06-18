@@ -1,4 +1,9 @@
 const { Command } = require('sylphy')
+const db = require('quick.db')
+const randomColor = require('randomcolor')
+const yaml = require('js-yaml')
+const fs = require('fs')
+let lang
 
 class purge extends Command {
   constructor (...args) {
@@ -7,46 +12,42 @@ class purge extends Command {
       cooldown: 10,
       options: { guildOnly: true, requirements: { permissions: { manageMessages: true } } },
       usage: [
-        { name: 'amount', displayName: 'amount', type: 'int', optional: false }
+        { name: 'amount', displayName: 'amount', type: 'int', optional: true }
       ]
     })
   }
 
   async handle ({ args, client, msg }, responder) {
+    const color = parseInt(randomColor().replace(/#/gi, '0x'))
+    if (db.get(`serverLang_${msg.channel.guild.id}`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
     const purge = args.amount
-    if (!msg.member.permission.has('manageMessages')) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('This requires you to have a role that can manage messages.')
-    } else if (!purge) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('There was no amount specified to delete!')
-    } else if (purge > 100) {
-      return responder
-        .format(['emoji:negative_squared_check_mark'])
-        .send('There is a maximum of 100 messages deleted at a time.')
-    } else {
-      client.deleteMessage(msg.channel.id, msg.id)
-      await client.getMessages(msg.channel.id, purge)
-        .then(messages => {
-          let msgA = []
-          for (let x = 0; x < messages.length; x++) {
-            msgA.push(messages[x].id)
-          }
-          let msgB = []
-          responder
-            .format(['emoji:speech_balloon'])
-            .send('Attempting to delete messages...')
-            .then(mess => msgB.push(mess.id))
-          client.deleteMessages(msg.channel.id, msgA)
-            .catch(error => {
-              return responder
-                .format(['emoji:interrobang'])
-                .send(`An error occurred: ${error}`)
-            })
-          client.deleteMessages(msg.channel.id, msgB)
-        })
+    if (!msg.member.permission.has('manageMessages')) return responder.send(`${lang.rdeny} ${lang.purgenoperms}`)
+    else if (!purge) return responder.send(`${lang.rquestion} ${lang.purgenoamount}`)
+    else if (purge > 100) return responder.send(`${lang.rdeny} ${lang.purgemax}`)
+    else {
+      try {
+        client.deleteMessage(msg.channel.id, msg.id)
+        await client.getMessages(msg.channel.id, purge)
+          .then(messages => {
+            let msgA = []
+            for (let x = 0; x < messages.length; x++) {
+              msgA.push(messages[x].id)
+            }
+            responder
+              .format(['emoji:speech_balloon'])
+              .send(`${lang.purgeworking}`)
+              .then(mess => client.deleteMessage(msg.channel.id, mess.id))
+            client.deleteMessages(msg.channel.id, msgA)
+          })
+      } catch (error) {
+        this.logger.error(new Error(error))
+        return responder.send(' ', { embed: {
+          color: color,
+          title: 'Purge Error',
+          description: `${error}`,
+          timestamp: new Date()
+        } })
+      }
     }
   }
 }

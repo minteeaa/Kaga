@@ -1,9 +1,37 @@
+# Emojis
 rsuccess: <:success:589489715905036289>
 rquestion: <:question:589499527518486538>
 rdeny: <:deny:589500870765445177>
+
+# Ban Messages
 bannoperms: This requires you to have the `Ban Members` permission!
 bannospecify: You didn't specify anyone to ban!
 banself: Why would you want to ban yourself?
 bannotvalid: No valid user specified!
 banbot: You tried to ban me, but ultimately failed.
 bansuccess: $USER has been banned.
+
+# Kick Messages
+kicknoperms: This requires you to have the `Kick Members` permission!
+kicknospecify: You didn't specify anyone to kick!
+kickself: Why would you want to kick yourself?
+kicknotvalid: No valid user specified!
+kickbot: You tried to kick me, but couldn't.
+kicksuccess: $USER has been kicked.
+
+# Purge messages
+purgenoperms: This requires you to have the `Manage Messages` permission!
+purgenoamount: No amount specified to purge!
+purgemax: There is a maximum of 100 messages deleted at one time.
+purgeworking: Attempting to delete messages...
+
+# Prefix Messages
+prefixnospecify: No prefix specified!
+prefixchanged: Prefix set to `$PREFIX`
+
+# Say and Sayd Command Messages
+say: [
+  'Huh?',
+  'What?',
+  '...'
+  ]

@@ -33,7 +33,6 @@ class help extends Command {
         ]
       }
     }
-    responder.typing()
     const command = args.command
     let groups = []
     if (!command) {
