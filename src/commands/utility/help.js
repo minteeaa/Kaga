@@ -1,6 +1,7 @@
 const { Command } = require('sylphy')
 const fs = require('fs')
 const readdirp = require('readdirp')
+const randomColor = require('randomcolor')
 
 class help extends Command {
   constructor (...args) {
@@ -18,7 +19,7 @@ class help extends Command {
     const allFilePaths = []
     const embed = {
       'embed': {
-        'color': 9903542,
+        'color': parseInt(randomColor({ luminosity: 'light', hue: 'pink' }).replace('#', '0x')),
         'timestamp': new Date(),
         'footer': {
           'icon_url': msg.author.avatarURL,
@@ -26,7 +27,7 @@ class help extends Command {
         },
         'author': {
           'name': `${client.user.username}'s commands`,
-          'url': 'https://docs.zetari.xyz/reika/info',
+          'url': 'https://docs.zetari.xyz/chiya/info',
           'icon_url': client.user.avatarURL
         },
         'fields': [

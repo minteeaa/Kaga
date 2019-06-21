@@ -6,12 +6,13 @@ const fs = require('fs')
 let lang
 let emotes
 
-class kick extends Command {
+class warn extends Command {
   constructor (...args) {
     super(...args, {
-      name: 'kick',
+      name: 'warn',
+      aliases: 'strike',
       cooldown: 2,
-      options: { guildOnly: true, requirements: { permissions: { kickMembers: true } } },
+      options: { guildOnly: true, requirements: { permissions: { manageMessages: true } } },
       usage: [
         { name: 'member', displayName: 'member', type: 'member', optional: true },
         { name: 'reason', displayName: 'reason', type: 'string', optional: true, last: true }
@@ -27,20 +28,20 @@ class kick extends Command {
     const reason = args.reason
     let user
     if (msg.mentions.length > 0) user = msg.channel.guild.members.get(msg.mentions[0].id)
-    if (!msg.member.permission.has('kickMembers')) return responder.send(`${emotes.deny} ${lang.kicknoperms}`)
-    else if (!member) return responder.send(`${emotes.question} ${lang.kicknospecify}`)
-    else if (!msg.mentions[0]) return responder.send(`${emotes.deny} ${lang.kicknotvalid}`)
-    else if (user.id === msg.author.id) return responder.send(`${emotes.question} ${lang.kickself}`)
-    else if (user.id === client.user.id) return responder.send(`${emotes.deny} ${lang.kickbot}`)
+    if (!msg.member.permission.has('manageMessages')) return responder.send(`${emotes.deny} ${lang.warnnoperms}`)
+    else if (!member) return responder.send(`${emotes.question} ${lang.warnnospecify}`)
+    else if (user.id === msg.author.id) return responder.send(`${emotes.deny} ${lang.warnself}`)
+    else if (user.id === client.user.id) return responder.send(`${emotes.deny} ${lang.warnbot}`)
     else {
       try {
-        await msg.channel.guild.kickMember(user.id, reason)
-        responder.send(`${emotes.success} ${lang.kicksuccess.replace('$USER', `**${user.username}#${user.discriminator}**`)}`)
+        await db.add(`${user.id}.history.warns`, 1)
+        if (!reason) responder.send(`${emotes.success} ${lang.warnnoreason.replace('$USER', user.mention)}`)
+        else responder.send(`${emotes.success} ${lang.warnsuccess.replace('$USER', user.mention).replace('$REASON', reason)}`)
       } catch (error) {
         this.logger.error(new Error(error))
         return responder.send(' ', { embed: {
           color: color,
-          title: 'Kick Error',
+          title: 'Warn Error',
           description: `${error}`,
           timestamp: new Date()
         } })
@@ -49,9 +50,9 @@ class kick extends Command {
   }
 }
 
-module.exports = kick
+module.exports = warn
 module.exports.help = {
-  description: 'kick a user from the server.',
-  usage: 'kick <user> [purge messages] [reason]',
+  description: 'Warn/strike someone.',
+  usage: 'warn <user>',
   group: 'moderation'
 }

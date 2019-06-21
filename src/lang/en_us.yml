@@ -1,8 +1,3 @@
-# Emojis
-rsuccess: <:success:589489715905036289>
-rquestion: <:question:589499527518486538>
-rdeny: <:deny:589500870765445177>
-
 # Ban Messages
 bannoperms: This requires you to have the `Ban Members` permission!
 bannospecify: You didn't specify anyone to ban!
@@ -24,6 +19,15 @@ purgenoperms: This requires you to have the `Manage Messages` permission!
 purgenoamount: No amount specified to purge!
 purgemax: There is a maximum of 100 messages deleted at one time.
 purgeworking: Attempting to delete messages...
+
+# Warn messages
+warnnoperms: This requires you to have the `Manage Messages` permission!
+warnnospecify: You didn't specify anyone to warn!
+warnself: Just... why?
+warnnotvalid: No valid user specified!
+warnbot: Hey! I'm just doing a job!
+warnsuccess: '$USER has been warned for: $REASON'
+warnnoreason: $USER has been warned.
 
 # Prefix Messages
 prefixnospecify: No prefix specified!
