@@ -24,7 +24,7 @@ class say extends Command {
 
 module.exports = say
 module.exports.help = {
-  description: 'Make Reika say something.',
+  description: 'Make Chiya say something.',
   usage: 'say <text>',
   group: 'fun'
 }

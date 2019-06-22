@@ -27,7 +27,7 @@ class prefix extends Command {
 
 module.exports = prefix
 module.exports.help = {
-  description: 'Change the server prefix for Reika.',
+  description: 'Change the server prefix for Chiya.',
   usage: 'prefix <prefix>',
   group: 'utility'
 }
