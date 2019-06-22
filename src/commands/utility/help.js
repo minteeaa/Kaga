@@ -1,7 +1,6 @@
 const { Command } = require('sylphy')
 const fs = require('fs')
 const readdirp = require('readdirp')
-const randomColor = require('randomcolor')
 
 class help extends Command {
   constructor (...args) {
@@ -19,7 +18,7 @@ class help extends Command {
     const allFilePaths = []
     const embed = {
       'embed': {
-        'color': parseInt(randomColor({ luminosity: 'light', hue: 'pink' }).replace('#', '0x')),
+        'color': client.normalColor,
         'timestamp': new Date(),
         'footer': {
           'icon_url': msg.author.avatarURL,
