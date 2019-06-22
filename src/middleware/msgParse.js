@@ -7,7 +7,7 @@ module.exports = {
     /* eslint-enable */
     if (!msg.channel.guild) return Promise.resolve()
     const db = require('quick.db')
-    let pre = db.fetch(`prefix_${msg.channel.guild.id}`)
+    let pre = db.fetch(`${msg.channel.guild.id}.settings.prefix`)
     let prefix
     if (!pre) prefix = '-!'
     else prefix = pre

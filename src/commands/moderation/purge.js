@@ -4,7 +4,6 @@ const randomColor = require('randomcolor')
 const yaml = require('js-yaml')
 const fs = require('fs')
 let lang
-let emotes
 
 class purge extends Command {
   constructor (...args) {
@@ -20,12 +19,11 @@ class purge extends Command {
 
   async handle ({ args, client, msg }, responder) {
     const color = parseInt(randomColor().replace(/#/gi, '0x'))
-    if (db.get(`serverLang_${msg.channel.guild.id}`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
-    emotes = yaml.safeLoad(fs.readFileSync('./src/lang/emotes.yml', 'utf8'))
+    if (db.get(`${msg.channel.guild.id}.settings.lang`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
     const purge = args.amount
-    if (!msg.member.permission.has('manageMessages')) return responder.send(`${emotes.deny} ${lang.purgenoperms}`)
-    else if (!purge) return responder.send(`${emotes.question} ${lang.purgenoamount}`)
-    else if (purge > 100) return responder.send(`${emotes.deny} ${lang.purgemax}`)
+    if (!msg.member.permission.has('manageMessages')) return responder.send(`${client.deny} ${lang.purgenoperms}`)
+    else if (!purge) return responder.send(`${client.question} ${lang.purgenoamount}`)
+    else if (purge > 100) return responder.send(`${client.deny} ${lang.purgemax}`)
     else {
       try {
         client.deleteMessage(msg.channel.id, msg.id)

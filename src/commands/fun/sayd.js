@@ -16,8 +16,8 @@ class sayd extends Command {
     })
   }
   handle ({ args, client, msg }, responder) {
-    if (db.get(`serverLang_${msg.channel.guild.id}`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
-    if (!args.text) return responder.send(`${lang.rquestion} ${lang.say[Math.floor(Math.random() * lang.say.length)]}`)
+    if (db.get(`${msg.channel.guild.id}.settings.lang`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
+    if (!args.text) return responder.send(`${client.question} ${lang.say[Math.floor(Math.random() * lang.say.length)]}`)
     else {
       responder.send(args.text)
       msg.delete(msg.author)

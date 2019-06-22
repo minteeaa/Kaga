@@ -16,11 +16,11 @@ class prefix extends Command {
 
   handle ({ args, client, msg }, responder) {
     const db = require('quick.db')
-    if (db.get(`serverLang_${msg.channel.guild.id}`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
-    if (!args.prefix) return responder.send(`${lang.rquestion} ${lang.prefixnospecify}`)
+    if (db.get(`${msg.channel.guild.id}.settings.language`) == null) lang = yaml.safeLoad(fs.readFileSync('./src/lang/en_us.yml', 'utf8'))
+    if (!args.prefix) return responder.send(`${client.question} ${lang.prefixnospecify}`)
     else {
-      db.set(`prefix_${msg.channel.guild.id}`, args.prefix)
-      responder.send(`${lang.rsuccess} ${lang.prefixchanged.replace('$PREFIX', args.prefix)}`)
+      db.set(`${msg.channel.guild.id}.settings.prefix`, args.prefix)
+      responder.send(`${client.success} ${lang.prefixchanged.replace('$PREFIX', args.prefix)}`)
     }
   }
 }
