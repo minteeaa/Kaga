@@ -5,7 +5,7 @@ module.exports = {
     exec_mode: 'cluster',
     instances: 1,
     watch: false,
-    autorestart: true,
+    autorestart: false,
     output: './logs/chiya/output.log',
     error: './logs/chiya/error.log'
   }]

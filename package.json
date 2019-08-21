@@ -1,30 +1,28 @@
 {
-  "name": "reika-v2",
+  "name": "chiya",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "chiya.config.js",
   "scripts": {
-    "test": ""
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Zetari",
-  "license": "ISC",
+  "license": "AGPL-3.0-or-later",
   "dependencies": {
     "chalk": "^2.4.2",
-    "discord.js": "^11.4.2",
-    "dotenv": "^7.0.0",
-    "fs": "0.0.1-security",
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.0.0",
+    "file-system": "^2.2.2",
     "js-yaml": "^3.13.1",
     "moment": "^2.24.0",
-    "nodemon": "^1.19.1",
+    "node-emoji": "^1.10.0",
     "path": "^0.12.7",
-    "quick.db": "^7.0.0-b21",
-    "randomcolor": "^0.5.3",
-    "readdirp": "^2.2.1",
+    "quick.db": "^7.0.0-b22",
+    "randomcolor": "^0.5.4",
+    "readdirp": "^3.0.2",
+    "standard": "^12.0.1",
     "sylphy": "^0.4.5",
-    "util": "^0.11.1",
+    "util": "^0.12.0",
     "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "standard": "^12.0.1"
   }
 }
