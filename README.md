@@ -72,7 +72,7 @@ $ mv ".env.example" ".env"
 ## Running the bot
 Assuming your computer hasn't exploded yet, you can now run the bot. Go ahead and check out the `chiya.config.js` and edit it to your liking. You'll need to run this in PM2.
 ```
-$ pm2 start chiya.bot.js
+$ pm2 start chiya.config.js
 ```
 To monitor the bot, you can leave the logs open...
 ```
