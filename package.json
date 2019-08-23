@@ -1,7 +1,8 @@
 {
   "name": "chiya",
   "version": "1.0.0",
-  "description": "",
+  "description": "A quick, multipurpose bot for discord.",
+  "homepage": "https://github.com/zetari/chiya#readme",
   "main": "chiya.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

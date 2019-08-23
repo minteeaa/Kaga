@@ -2,7 +2,7 @@ const { Command } = require('sylphy')
 const db = require('quick.db')
 const randomColor = require('randomcolor')
 const yaml = require('js-yaml')
-const fs = require('fs')
+const fs = require('file-system')
 let lang
 
 class purge extends Command {

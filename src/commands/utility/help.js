@@ -1,5 +1,5 @@
 const { Command } = require('sylphy')
-const fs = require('fs')
+const fs = require('file-system')
 const readdirp = require('readdirp')
 
 class help extends Command {

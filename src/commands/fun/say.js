@@ -1,7 +1,7 @@
 const { Command } = require('sylphy')
 const db = require('quick.db')
 const yaml = require('js-yaml')
-const fs = require('fs')
+const fs = require('file-system')
 let lang
 
 class say extends Command {

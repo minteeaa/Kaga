@@ -88,11 +88,6 @@ chiya.on('ready', () => {
 
 chiya.run()
 
-process.on('SIGINT', function () {
-  logger.info('SIGINT detected!')
-  process.exit(0)
-})
-
 process.on('unhandledRejection', (reason, promise) => {
   if (typeof reason === 'undefined') return
   logger.error(`Unhandled rejection: ${reason} - ${util.inspect(promise)}`)

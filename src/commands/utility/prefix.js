@@ -1,6 +1,6 @@
 const { Command } = require('sylphy')
 const yaml = require('js-yaml')
-const fs = require('fs')
+const fs = require('file-system')
 let lang
 
 class prefix extends Command {

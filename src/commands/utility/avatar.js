@@ -15,6 +15,9 @@ class avatar extends Command {
   handle ({ args, client, msg }, responder) {
     const color = parseInt(randomColor().replace(/#/gi, '0x'))
     const user = msg.mentions[0] || msg.author
+    let p
+    if (user.avatarURL.includes(`${user.avatar}.gif`)) p = 'gif'
+    else p = 'png'
     const embed =
       {
         'embed': {
@@ -23,7 +26,7 @@ class avatar extends Command {
           'color': color,
           'timestamp': new Date(),
           'image': {
-            'url': `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=2048`
+            'url': `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${p}?size=2048`
           },
           'author': {
             'name': user.username + '#' + user.discriminator
