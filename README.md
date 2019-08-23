@@ -3,7 +3,7 @@
 <p align="center">
     <a title="DavidDM" href="https://david-dm.org/zetari/chiya.svg"><img src="https://img.shields.io/david/zetari/chiya.svg?style=flat" alt="DavidDM">
     <a title="Code Style" href="https://standardjs.com/"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Code Style">
-    <a title="License" href="https://github.com/zetari/chiya/blob/master/LICENSE"><img src="https://img.shields.io/github/license/zetari/chiya.svg" alt="License" /></a>
+    <a title="License" href="https://github.com/zetari/chiya/blob/master/LICENSE"><img src="https://img.shields.io/github/license/zetari/chiya.svg" alt="License"></a>
 </p>
 
 ---
