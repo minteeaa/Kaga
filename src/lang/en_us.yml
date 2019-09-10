@@ -65,6 +65,8 @@ sbwblist: The block mode can only be either `whitelist` or `blacklist`!
 sbwl: The block mode is already a `whitelist`!
 sbbl: The block mode is already a `blacklist`!
 sboptreset: The option `$OPTION` has been reset to default.
+sblistadd: $USER has been added to the $LIST.
+sbnousermention: No user specified to add!
 
 # Say and Sayd Command Messages
 say: [

@@ -13,7 +13,6 @@ class reactionHandler extends Module {
     })
   }
 
-  // TODO: blacklist checking
   // TODO: bot stars checking
   // TODO: self star checking
 
@@ -23,9 +22,13 @@ class reactionHandler extends Module {
       const min = db.fetch(`${message.channel.guild.id}.starboard.settings.minimum`)
       const cha = db.fetch(`${message.channel.guild.id}.starboard.settings.channel`)
       const posted = db.fetch(`${message.channel.guild.id}.starboard.posted.${message.id}`)
+      const listMode = db.fetch(`${message.channel.guild.id}.starboard.settings.blockmode`)
+      const listList = db.fetch(`${message.channel.guild.id}.starboard.settings.blockmode.userlist`)
       const msg = await message.channel.getMessage(message.id)
       if (cha === 'None') return
       if (message.channel.id === cha) return
+      if (listMode === 'blacklist' && listList.includes(message.author.id)) return
+      if (listMode === 'whitelist' && listList.includes(message.author.id) === false) return
       if ((reaction.id == null && emoji.unemojify(reaction.name) === emote) || (reaction.id != null && `<:${reaction.name}:${reaction.id}>` === emote)) {
         db.add(`${message.channel.guild.id}.starboard.count.${message.id}`, 1)
         const c = db.fetch(`${message.channel.guild.id}.starboard.count.${message.id}`)
