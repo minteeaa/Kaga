@@ -33,6 +33,39 @@ warnnoreason: $USER has been warned.
 prefixnospecify: No prefix specified!
 prefixchanged: Prefix set to `$PREFIX`
 
+# Starboard Messages
+sbnooption1: No option specified!
+sbnooption2: No value/secondary option specified!
+sbnooption3: No value/third option specified!
+sbblockusersuccess: $USER has been **added** to the starboard block list.
+sbblocklistempty: The block list is currently empty!
+sbusernotblocked: That user is not on the starboard block list!
+sbuserblocked: That user is already on the starboard block list!
+sbunblockusersuccess: $USER has been **removed** from the starboard block list.
+# Starboard Config
+sbnsfwchannel: NSFW Channel?
+sbminimal: Minimal?
+sbminimum: Minimum
+sbemoji: Emoji
+sbchannel: Channel
+sbselfstar: Self Star?
+sbremovebotstars: Remove Bot Stars?
+sbblockmode: Block Mode
+sbnsfwnochannel: The channel will be made $OPTION when it is set using `starboard config 6 <#channel>`
+sbtruefalse: This option requires a `true` or `false` input!
+sbnumerical: This option requires a numerical input!
+sbtrue: This option is already `true`!
+sbfalse: This option is already `false`!
+sboptionset: The option `$OPTION` has been set to `$VALUE`.
+sbemojiset: The emoji for the server starboard has been set to $EMOJI
+sbemojinoguild: The emoji specified is not from this guild!
+sbchannelmention: This options requires a channel input!
+sbchannelset: The channel for the server starboard has been set to $CHANNEL
+sbwblist: The block mode can only be either `whitelist` or `blacklist`!
+sbwl: The block mode is already a `whitelist`!
+sbbl: The block mode is already a `blacklist`!
+sboptreset: The option `$OPTION` has been reset to default.
+
 # Say and Sayd Command Messages
 say: [
   'Huh?',
