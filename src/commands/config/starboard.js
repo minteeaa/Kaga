@@ -21,7 +21,6 @@ class starboard extends Command {
     const option1 = args.option
     const option2 = args.option2
     const option3 = args.option3
-    const option4 = args.option4
     if (option1 === 'block') {
       if (['add', 'remove'].includes(option2)) {
         if (option3 === `<@${msg.mentions[0].id}>`) {
@@ -179,13 +178,11 @@ class starboard extends Command {
           } else if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`) === 'blacklist') return responder.send(`${client.deny} ${client.en_us.sbbl}`)
         }
       } else if (option2 === 'whitelist' || option2 === 'blacklist') {
-        if (!option3 || !option4) return
-        if (option3 === 'add' && option4 != null) {
-          // FIXME: this thing...
-          const userM = msg.mentions[0].id
-          if (userM == null) return responder.send(`${client.deny} ${client.en_us.sbnousermention}`)
+        if (option3 === 'add') {
+          if (msg.mentions.length === 0) return responder.send(`${client.deny} ${client.en_us.sbnousermention}`)
           else {
-            db.push(`${msg.channel.guild.id}.starboard.settings.blockmode.userlist`, userM)
+            const userM = msg.mentions[0].id
+            db.push(`${msg.channel.guild.id}.starboard.lists.bw`, userM)
             return responder.send(`${client.success} ${client.en_us.sblistadd.replace('$USER', msg.mentions[0].username).replace('$LIST', db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`))}`)
           }
         }

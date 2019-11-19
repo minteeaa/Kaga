@@ -13,23 +13,26 @@ class reactionHandler extends Module {
     })
   }
 
-  // TODO: bot stars checking
-  // TODO: self star checking
-
-  async onReactAdd (message, reaction) {
+  async onReactAdd (message, reaction, user) {
     try {
+      const msg = await message.channel.getMessage(message.id)
       const emote = db.fetch(`${message.channel.guild.id}.starboard.settings.emoji`)
+      const selfStar = db.fetch(`${message.channel.guild}.starboard.settings.selfstar`)
+      const botStar = db.fetch(`${message.channel.guild}.starboard.settings.selfstar`)
       const min = db.fetch(`${message.channel.guild.id}.starboard.settings.minimum`)
       const cha = db.fetch(`${message.channel.guild.id}.starboard.settings.channel`)
       const posted = db.fetch(`${message.channel.guild.id}.starboard.posted.${message.id}`)
       const listMode = db.fetch(`${message.channel.guild.id}.starboard.settings.blockmode`)
-      const listList = db.fetch(`${message.channel.guild.id}.starboard.settings.blockmode.userlist`)
-      const msg = await message.channel.getMessage(message.id)
+      const listList = db.fetch(`${message.channel.guild.id}.starboard.lists.bw`)
       if (cha === 'None') return
       if (message.channel.id === cha) return
-      if (listMode === 'blacklist' && listList.includes(message.author.id)) return
-      if (listMode === 'whitelist' && listList.includes(message.author.id) === false) return
-      if ((reaction.id == null && emoji.unemojify(reaction.name) === emote) || (reaction.id != null && `<:${reaction.name}:${reaction.id}>` === emote)) {
+      if (listList != null) {
+        if (listMode === 'blacklist' && listList.includes(message.author.id)) return
+        if (listMode === 'whitelist' && listList.includes(message.author.id) === false) return
+      }
+      if ((reaction.id == null && emoji.unemojify(reaction.name) === `:${emote}:`) || (reaction.id != null && `<:${reaction.name}:${reaction.id}>` === emote)) {
+        if (selfStar === false && message.author.id === user) return
+        if (botStar === false && message.author.id === this._client.id) return
         db.add(`${message.channel.guild.id}.starboard.count.${message.id}`, 1)
         const c = db.fetch(`${message.channel.guild.id}.starboard.count.${message.id}`)
         if (posted == null) {
@@ -48,12 +51,13 @@ class reactionHandler extends Module {
   async onReactRem (message, reaction) {
     const emote = db.fetch(`${message.channel.guild.id}.starboard.settings.emoji`)
     const msg = await message.channel.getMessage(message.id)
-    if ((reaction.id == null && emoji.unemojify(reaction.name) === emote) || (reaction.id != null && `<:${reaction.name}:${reaction.id}>` === emote)) {
+    if ((reaction.id == null && emoji.unemojify(reaction.name) === `:${emote}:`) || (reaction.id != null && `<:${reaction.name}:${reaction.id}>` === emote)) {
       db.subtract(`${message.channel.guild.id}.starboard.count.${message.id}`, 1)
       const c = db.fetch(`${message.channel.guild.id}.starboard.count.${message.id}`)
       const min = db.fetch(`${message.channel.guild.id}.starboard.settings.minimum`)
       const starMsg = db.fetch(`${message.channel.guild.id}.starboard.posted.${message.id}`)
       const starChannel = await message.channel.guild.channels.get(db.fetch(`${message.channel.guild.id}.starboard.settings.channel`))
+      if (starMsg == null) return
       const starBMsg = await starChannel.getMessage(starMsg)
       try {
         if (starMsg != null && c < min) {
@@ -83,19 +87,14 @@ async function populateEmbed (message, msg) {
     embed.embed.color = 0xFFC300
     embed.embed.title = `${c} ${emote}`
     embed.embed.timestamp = new Date()
-    embed.embed.footer = {
-      'icon_url': msg.author.avatarURL,
-      'text': `${msg.author.username} in #${msg.channel.name}`
-    }
+    embed.embed.footer = { 'icon_url': msg.author.avatarURL, 'text': `${msg.author.username} in #${msg.channel.name}` }
     embed.embed.image = { 'url': image }
     if (msg.content !== '') embed.embed.description = msg.content
   } else if (min === false) {
     embed.embed.color = 0xFFC300
     embed.embed.title = `${c} ${emote}`
     embed.embed.timestamp = new Date()
-    embed.embed.footer = {
-      'text': msg.id
-    }
+    embed.embed.footer = { 'text': msg.id }
     embed.embed.thumbnail = { 'url': msg.author.avatarURL }
     embed.embed.image = { 'url': image }
     embed.embed.fields = [
