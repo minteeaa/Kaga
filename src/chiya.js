@@ -8,9 +8,7 @@ const path = require('path')
 const util = require('util')
 const resolve = (str) => path.join('src', str)
 
-const logFormat = printf((info) => {
-  return `[${chalk.grey(moment().format('hh:mm:ss'))}] ${info.level}: ${info.message}`
-})
+const logFormat = printf((info) => { return `[${chalk.grey(moment().format('hh:mm:ss'))}] ${info.level}: ${info.message}` })
 
 const logger = createLogger({
   level: 'silly',
