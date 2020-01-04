@@ -1,4 +1,6 @@
-const { Module } = require('sylphy')
+const {
+  Module
+} = require('sylphy')
 const db = require('quick.db')
 const emoji = require('node-emoji')
 
@@ -13,8 +15,8 @@ class reactionHandler extends Module {
     })
   }
 
-  // TODO: bot stars checking
-  // TODO: self star checking
+  // TODO bot star check
+  // TODO self star check
 
   async onReactAdd (message, reaction) {
     try {
@@ -22,7 +24,7 @@ class reactionHandler extends Module {
       const min = db.fetch(`${message.channel.guild.id}.starboard.settings.minimum`)
       const cha = db.fetch(`${message.channel.guild.id}.starboard.settings.channel`)
       const posted = db.fetch(`${message.channel.guild.id}.starboard.posted.${message.id}`)
-      const listMode = db.fetch(`${message.channel.guild.id}.starboard.settings.blockmode`)
+      const listMode = db.fetch(`${message.channel.guild.id}.starboard.settings.blockmode.type`)
       const listList = db.fetch(`${message.channel.guild.id}.starboard.settings.blockmode.userlist`)
       const msg = await message.channel.getMessage(message.id)
       if (cha === 'None') return
@@ -43,7 +45,9 @@ class reactionHandler extends Module {
           return await this._client.editMessage(editMsg, await populateEmbed(message, msg))
         }
       }
-    } catch (e) { this.logger.error(e) }
+    } catch (e) {
+      this.logger.error(e)
+    }
   }
   async onReactRem (message, reaction) {
     const emote = db.fetch(`${message.channel.guild.id}.starboard.settings.emoji`)
@@ -60,12 +64,16 @@ class reactionHandler extends Module {
           starChannel.deleteMessage(starBMsg.id)
           return db.delete(`${message.channel.guild.id}.starboard.posted.${message.id}`)
         } else if (starMsg != null && c >= min) return await this._client.editMessage(starBMsg, await populateEmbed(message, msg))
-      } catch (e) { this.logger.error(e) }
+      } catch (e) {
+        this.logger.error(e)
+      }
     }
   }
 }
 
-let embed = { 'embed': {} }
+let embed = {
+  'embed': {}
+}
 
 async function populateEmbed (message, msg) {
   let image
@@ -87,7 +95,9 @@ async function populateEmbed (message, msg) {
       'icon_url': msg.author.avatarURL,
       'text': `${msg.author.username} in #${msg.channel.name}`
     }
-    embed.embed.image = { 'url': image }
+    embed.embed.image = {
+      'url': image
+    }
     if (msg.content !== '') embed.embed.description = msg.content
   } else if (min === false) {
     embed.embed.color = 0xFFC300
@@ -96,14 +106,35 @@ async function populateEmbed (message, msg) {
     embed.embed.footer = {
       'text': msg.id
     }
-    embed.embed.thumbnail = { 'url': msg.author.avatarURL }
-    embed.embed.image = { 'url': image }
-    embed.embed.fields = [
-      { 'name': 'Author', 'value': msg.author.mention, 'inline': true },
-      { 'name': 'Channel', 'value': msg.channel.mention, 'inline': true },
-      { 'name': 'Jump to message', 'value': `[Jump](https://discordapp.com/channels/${message.channel.guild.id}/${msg.channel.id}/${msg.id})`, 'inline': true }
+    embed.embed.thumbnail = {
+      'url': msg.author.avatarURL
+    }
+    embed.embed.image = {
+      'url': image
+    }
+    embed.embed.fields = [{
+      'name': 'Author',
+      'value': msg.author.mention,
+      'inline': true
+    },
+    {
+      'name': 'Channel',
+      'value': msg.channel.mention,
+      'inline': true
+    },
+    {
+      'name': 'Jump to message',
+      'value': `[Jump](https://discordapp.com/channels/${message.channel.guild.id}/${msg.channel.id}/${msg.id})`,
+      'inline': true
+    }
     ]
-    if (msg.content !== '') embed.embed.fields.push({ 'name': 'Content', 'value': msg.content, 'inline': true })
+    if (msg.content !== '') {
+      embed.embed.fields.push({
+        'name': 'Content',
+        'value': msg.content,
+        'inline': true
+      })
+    }
   }
   return embed
 }

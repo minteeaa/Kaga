@@ -90,4 +90,4 @@ Under the [AGPL-3.0 License](https://opensource.org/licenses/AGPL-3.0).
 
 Made with ❤️ and a lot of coffee by Zetari.
 
-> Website / [zetari.xyz](https://zetari.xyz/) | Github / [Zetari](https://github.com/zetari) | Twitter / [@Zetari](https://twitter.com/zetari_/) | Discord / ***zetari#0001***
+> Github: [Zetari](https://github.com/zetari) | Twitter: [@Zetari](https://twitter.com/zetari_/) | Discord: ***mintea#0001***
