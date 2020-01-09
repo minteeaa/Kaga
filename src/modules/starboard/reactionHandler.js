@@ -1,6 +1,4 @@
-const {
-  Module
-} = require('sylphy')
+const { Module } = require('sylphy')
 const db = require('quick.db')
 const emoji = require('node-emoji')
 

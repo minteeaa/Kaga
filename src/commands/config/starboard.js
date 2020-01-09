@@ -50,7 +50,7 @@ class starboard extends Command {
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.minimal`)) db.set(`${msg.channel.guild.id}.starboard.settings.minimal`, false)
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.minimum`)) db.set(`${msg.channel.guild.id}.starboard.settings.minimum`, 2)
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.selfstar`)) db.set(`${msg.channel.guild.id}.starboard.settings.selfstar`, false)
-      if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.emoji`)) db.set(`${msg.channel.guild.id}.starboard.settings.emoji`, 'star')
+      if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.emoji`)) db.set(`${msg.channel.guild.id}.starboard.settings.emoji`, ':star:')
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.channel`)) db.set(`${msg.channel.guild.id}.starboard.settings.channel`, 'None')
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.botstars`)) db.set(`${msg.channel.guild.id}.starboard.settings.botstars`, false)
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`)) db.set(`${msg.channel.guild.id}.starboard.settings.blockmode.type`, 'blacklist')
