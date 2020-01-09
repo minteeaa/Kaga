@@ -25,5 +25,8 @@
     "sylphy": "^0.4.5",
     "util": "^0.12.0",
     "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
   }
 }

@@ -21,6 +21,7 @@ class starboard extends Command {
     const option1 = args.option
     const option2 = args.option2
     const option3 = args.option3
+    const option4 = args.option4
     if (option1 === 'block') {
       if (['add', 'remove'].includes(option2)) {
         if (option3 === `<@${msg.mentions[0].id}>`) {
@@ -49,10 +50,10 @@ class starboard extends Command {
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.minimal`)) db.set(`${msg.channel.guild.id}.starboard.settings.minimal`, false)
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.minimum`)) db.set(`${msg.channel.guild.id}.starboard.settings.minimum`, 2)
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.selfstar`)) db.set(`${msg.channel.guild.id}.starboard.settings.selfstar`, false)
-      if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.emoji`)) db.set(`${msg.channel.guild.id}.starboard.settings.emoji`, 'star')
+      if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.emoji`)) db.set(`${msg.channel.guild.id}.starboard.settings.emoji`, ':star:')
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.channel`)) db.set(`${msg.channel.guild.id}.starboard.settings.channel`, 'None')
       if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.botstars`)) db.set(`${msg.channel.guild.id}.starboard.settings.botstars`, false)
-      if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`)) db.set(`${msg.channel.guild.id}.starboard.settings.blockmode`, 'blacklist')
+      if (!db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`)) db.set(`${msg.channel.guild.id}.starboard.settings.blockmode.type`, 'blacklist')
       if (defTF.includes(option2) && ['clear', 'remove', 'reset', 'delete'].includes(option3)) {
         if (option2 === 1) {
           db.set(`${msg.channel.guild.id}.starboard.settings.minimal`, false)
@@ -83,8 +84,8 @@ class starboard extends Command {
         }
       } else if ((defBM === option2) && ['clear', 'remove', 'reset', 'delete'].includes(option3)) {
         if (option2 === defBM) {
-          db.set(`${msg.channel.guild.id}.starboard.settings.blockmode`, 'blacklist')
-          return responder.send(`${client.en_us.sboptreset.replace('$OPTION', 'blockmode')}`)
+          db.set(`${msg.channel.guild.id}.starboard.settings.blockmode.type`, 'blacklist')
+          return responder.send(`${client.en_us.sboptreset.replace('$OPTION', 'blockmode.type')}`)
         }
       }
       if (option2 === '1') {
@@ -167,29 +168,38 @@ class starboard extends Command {
       } else if (option2 === '7') {
         if (!['whitelist', 'blacklist'].includes(option3)) return responder.send(`${client.deny} ${client.en_us.sbwblist}`)
         else if (option3 === 'whitelist') {
-          if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`) === 'blacklist') {
-            db.set(`${msg.channel.guild.id}.starboard.settings.blockmode`, 'whitelist')
+          if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`) === 'blacklist') {
+            db.set(`${msg.channel.guild.id}.starboard.settings.blockmode.type`, 'whitelist')
             return responder.send(`${client.success} ${client.en_us.sboptionset.replace('$OPTION', 'block mode').replace('$VALUE', 'whitelist')}`)
-          } else if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`) === 'whitelist') return responder.send(`${client.deny} ${client.en_us.sbwl}`)
+          } else if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`) === 'whitelist') return responder.send(`${client.deny} ${client.en_us.sbwl}`)
         } else if (option3 === 'blacklist') {
-          if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`) === 'whitelist') {
-            db.set(`${msg.channel.guild.id}.starboard.settings.blockmode`, 'blacklist')
+          if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`) === 'whitelist') {
+            db.set(`${msg.channel.guild.id}.starboard.settings.blockmode.type`, 'blacklist')
             return responder.send(`${client.success} ${client.en_us.sboptionset.replace('$OPTION', 'block mode').replace('$VALUE', 'false')}`)
-          } else if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`) === 'blacklist') return responder.send(`${client.deny} ${client.en_us.sbbl}`)
+          } else if (db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`) === 'blacklist') return responder.send(`${client.deny} ${client.en_us.sbbl}`)
         }
       } else if (option2 === 'whitelist' || option2 === 'blacklist') {
-        if (option3 === 'add') {
-          if (msg.mentions.length === 0) return responder.send(`${client.deny} ${client.en_us.sbnousermention}`)
+        if (!option3 || !option4) return
+        if (option3 === 'add' && option4 != null) {
+          const userM = msg.mentions[0].id
+          if (userM == null) return responder.send(`${client.deny} ${client.en_us.sbnousermention}`)
           else {
-            const userM = msg.mentions[0].id
-            db.push(`${msg.channel.guild.id}.starboard.lists.bw`, userM)
-            return responder.send(`${client.success} ${client.en_us.sblistadd.replace('$USER', msg.mentions[0].username).replace('$LIST', db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`))}`)
+            db.push(`${msg.channel.guild.id}.starboard.settings.blockmode.userlist`, userM)
+            return responder.send(`${client.success} ${client.en_us.sblistadd.replace('$USER', msg.mentions[0].username).replace('$LIST', db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`))}`)
+          }
+        } else if (option3 === 'remove' && option4 != null) {
+          const userM = msg.mentions[0].id
+          if (userM == null) return responder.send(`${client.deny} ${client.en_us.sbnousermention}`)
+          else {
+            db.set(`${msg.channel.guild.id}.starboard.settings.blockmode.userlist`, removeA(db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.userlist`), userM))
+            return responder.send(`${client.success} ${client.en_us.sblistrem.replace('$USER', msg.mentions[0].username).replace('$LIST', db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`))}`)
           }
         }
       } else if (!option2) {
         let ch
         if (db.fetch(`${msg.channel.guild.id}.starboard.settings.channel`) === 'None') ch = 'None'
         else ch = `<#${db.fetch(`${msg.channel.guild.id}.starboard.settings.channel`)}>`
+        const emote = db.fetch(`${msg.channel.guild.id}.starboard.settings.emoji`)
         const embed = {
           'embed': {
             'author': {
@@ -213,7 +223,7 @@ class starboard extends Command {
               },
               {
                 'name': `\`4\` ${client.en_us.sbemoji}`,
-                'value': `:${db.fetch(`${msg.channel.guild.id}.starboard.settings.emoji`)}:`,
+                'value': `${emote}`,
                 'inline': true
               },
               {
@@ -228,7 +238,7 @@ class starboard extends Command {
               },
               {
                 'name': `\`7\` ${client.en_us.sbblockmode}`,
-                'value': db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode`),
+                'value': db.fetch(`${msg.channel.guild.id}.starboard.settings.blockmode.type`),
                 'inline': true
               }
             ]
