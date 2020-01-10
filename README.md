@@ -84,10 +84,10 @@ $ pm2 monit
 ```
 
 # License and the Author
-**Chiya** © [Zetari](https://github.com/zetari)
+**Chiya** © [Mintea](https://github.com/minteeaa)
 
 Under the [AGPL-3.0 License](https://opensource.org/licenses/AGPL-3.0).
 
-Made with ❤️ and a lot of coffee by Zetari.
+Made with ❤️ and a lot of coffee by mintea.
 
-> Github: [Zetari](https://github.com/zetari) | Twitter: [@Zetari](https://twitter.com/zetari_/) | Discord: ***mintea#0001***
+> Github: [minteeaa](https://github.com/minteeaa) | Twitter: [@Zetari](https://twitter.com/zetari_/) | Discord: ***mintea#0001***
