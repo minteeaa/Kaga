@@ -1,9 +1,9 @@
 <h1 align="center">Chiya</h1>
 <h3 align="center">A quick, multipurpose bot for discord.</h3>
 <p align="center">
-    <a title="DavidDM" href="https://david-dm.org/zetari/chiya.svg"><img src="https://img.shields.io/david/zetari/chiya.svg?style=flat" alt="DavidDM">
+    <a title="DavidDM" href="https://david-dm.org/minteeaa/chiya.svg"><img src="https://img.shields.io/david/minteeaa/chiya.svg?style=flat" alt="DavidDM">
     <a title="Code Style" href="https://standardjs.com/"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Code Style">
-    <a title="License" href="https://github.com/zetari/chiya/blob/master/LICENSE"><img src="https://img.shields.io/github/license/zetari/chiya.svg" alt="License"></a>
+    <a title="License" href="https://github.com/minteeaa/chiya/blob/master/LICENSE"><img src="https://img.shields.io/github/license/minteeaa/chiya.svg" alt="License"></a>
 </p>
 
 ---
@@ -43,7 +43,7 @@ You're interested, I see. In accordance with the license, you can help me build 
 ### Installation
 Clone the repo, either by downloading it or using the git command.
 ```
-$ git clone https://github.com/zetari/chiya.git
+$ git clone https://github.com/minteeaa/chiya.git
 $ cd chiya/
 $ npm i
 ```
