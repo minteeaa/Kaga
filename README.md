@@ -1,7 +1,7 @@
 <h1 align="center">Chiya</h1>
 <h3 align="center">A quick, multipurpose bot for discord.</h3>
 <p align="center">
-    <a title="DavidDM" href="https://david-dm.org/minteeaa/chiya.svg"><img src="https://img.shields.io/david/minteeaa/chiya.svg?style=flat-square" alt="DavidDM">
+    <a title="DavidDM" href="https://david-dm.org/minteeaa/chiya"><img src="https://img.shields.io/david/minteeaa/chiya.svg?style=flat-square" alt="DavidDM">
     <a title="Code Style" href="https://standardjs.com/"><img src="https://img.shields.io/badge/code_style-standard-blue.svg?style=flat-square" alt="Code Style">
     <a title="License" href="https://github.com/minteeaa/chiya/blob/master/LICENSE"><img src="https://img.shields.io/github/license/minteeaa/chiya.svg?style=flat-square" alt="License"></a>
 </p>
