@@ -3,7 +3,7 @@ const db = require('quick.db')
 const randomColor = require('randomcolor')
 
 class profile extends Command {
-  constructor (...args) {
+  constructor(...args) {
     super(...args, {
       name: 'profile',
       cooldown: 10,
@@ -14,7 +14,7 @@ class profile extends Command {
     })
   }
 
-  async handle ({ args, client, msg }, responder) {
+  async handle({ args, client, msg }, responder) {
     const color = parseInt(randomColor().replace(/#/gi, '0x'))
     const user = args.user
     const sUserXP = db.fetch(`${msg.channel.guild.id}.profiles.${msg.author.id}.xp`)

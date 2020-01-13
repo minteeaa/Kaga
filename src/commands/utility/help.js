@@ -3,7 +3,7 @@ const fs = require('file-system')
 const readdirp = require('readdirp')
 
 class help extends Command {
-  constructor (...args) {
+  constructor(...args) {
     super(...args, {
       name: 'help',
       cooldown: 5,
@@ -14,7 +14,7 @@ class help extends Command {
     })
   }
 
-  handle ({ args, client, msg }, responder) {
+  async handle({ args, client, msg }, responder) {
     const allFilePaths = []
     const embed = {
       'embed': {
@@ -48,23 +48,13 @@ class help extends Command {
       }
       client.createMessage(msg.channel.id, embed)
     } else {
-      const rdst = {
-        root: './src/commands',
-        entryType: 'files',
-        fileFilter: [`${command}.js`]
-      }
-      readdirp(rdst,
-        function (fileInfo) {
-          allFilePaths.push(
-            fileInfo.fullPath
-          )
-        },
-        function (err, res) {
-          if (err) {
-            throw err
-          }
-          if (allFilePaths.toString().includes(`${command}.js`) === true) {
-            const cmd = require(allFilePaths.toString())
+      await readdirp('./src/commands', { fileFilter: `${command}.js`, type: 'files' })
+        .on('data', async (entry) => {
+          const { path, stats: { size } } = entry
+          console.log(`${JSON.stringify({ path, size })}`)
+          console.log(path.toString().includes(`${command}.js`))
+          if (path.toString().includes(`${command}.js`) === true) {
+            const cmd = require(`./src/commands/${path}`)
             embed.embed.author.name = command + ' command documentation'
             embed.embed.fields.push({ name: 'GROUP', value: cmd.help.group })
             embed.embed.fields.push({ name: 'DESCRIPTION', value: cmd.help.description })
@@ -73,8 +63,7 @@ class help extends Command {
           } else {
             responder.error('that command does not exist!')
           }
-        }
-      )
+        })
     }
   }
 }
