@@ -15,22 +15,42 @@ class profile extends Command {
   }
 
   async handle ({ args, client, msg }, responder) {
+    let sUserLevel
+    let sUserXP
+    let gUserLevel
+    let gUserXP
+    let gUserDesc
     const color = parseInt(randomColor().replace(/#/gi, '0x'))
     const user = args.user
-    const sUserXP = db.fetch(
-      `${msg.channel.guild.id}.profiles.${msg.author.id}.xp`
-    )
-    const gUserXP = db.fetch(`global.profiles.${msg.author.id}.xp`)
-    const sUserLevel = db.fetch(
+    sUserXP = db.fetch(`${msg.channel.guild.id}.profiles.${msg.author.id}.xp`)
+    gUserXP = db.fetch(`global.profiles.${msg.author.id}.xp`)
+    sUserLevel = db.fetch(
       `${msg.channel.guild.id}.profiles.${msg.author.id}.level`
     )
-    const gUserLevel = db.fetch(`global.profiles.${msg.author.id}.level`)
-    const gUserDesc = db.fetch(`global.profiles.${msg.author.id}.desc`)
-    if (sUserXP == null) db.set(`${msg.channel.guild.id}.profiles.${msg.author.id}.xp`, 1)
-    if (gUserXP == null) db.set(`global.profiles.${msg.author.id}.xp`, 1)
-    if (sUserLevel == null) db.set(`${msg.channel.guild.id}.profiles.${msg.author.id}.level`, 1)
-    if (gUserLevel == null) db.set(`global.profiles.${msg.author.id}.level`, 1)
-    if (gUserDesc == null) db.set(`global.profiles.${msg.author.id}.desc`, 'A Discord user')
+    gUserLevel = db.fetch(`global.profiles.${msg.author.id}.level`)
+    gUserDesc = db.fetch(`global.profiles.${msg.author.id}.desc`)
+    if (sUserXP == null) {
+      db.set(`${msg.channel.guild.id}.profiles.${msg.author.id}.xp`, 1)
+      sUserXP = db.fetch(`${msg.channel.guild.id}.profiles.${msg.author.id}.xp`)
+    }
+    if (gUserXP == null) {
+      db.set(`global.profiles.${msg.author.id}.xp`, 1)
+      gUserXP = db.fetch(`global.profiles.${msg.author.id}.xp`)
+    }
+    if (sUserLevel == null) {
+      db.set(`${msg.channel.guild.id}.profiles.${msg.author.id}.level`, 1)
+      sUserLevel = db.fetch(
+        `${msg.channel.guild.id}.profiles.${msg.author.id}.level`
+      )
+    }
+    if (gUserLevel == null) {
+      db.set(`global.profiles.${msg.author.id}.level`, 1)
+      gUserLevel = db.fetch(`global.profiles.${msg.author.id}.level`)
+    }
+    if (gUserDesc == null) {
+      db.set(`global.profiles.${msg.author.id}.desc`, 'A Discord user')
+      gUserDesc = db.fetch(`global.profiles.${msg.author.id}.desc`)
+    }
     if (!user) {
       let embed = {
         embed: {
