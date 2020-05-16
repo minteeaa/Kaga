@@ -1,19 +1,18 @@
-const { Module } = require('sylphy')
+const { Event } = require('klasa')
 const db = require('quick.db')
 const emoji = require('node-emoji')
 
-class reactionHandler extends Module {
+module.exports = class extends Event {
   constructor (...args) {
     super(...args, {
-      name: 'starboard:reactions',
-      events: {
-        messageReactionAdd: 'onReactAdd',
-        messageReactionRemove: 'onReactRem'
-      }
+      name: 'starboardreactionAdd',
+      enabled: true,
+      event: 'messageReactionAdd',
+      once: false
     })
   }
 
-  async onReactAdd (message, reaction, user) {
+  async run (message, reaction, user) {
     try {
       const msg = await message.channel.getMessage(message.id)
       const emote = db.fetch(`${message.channel.guild.id}.starboard.settings.emoji`)
@@ -50,31 +49,10 @@ class reactionHandler extends Module {
       this.logger.error(e)
     }
   }
-  async onReactRem (message, reaction) {
-    const emote = db.fetch(`${message.channel.guild.id}.starboard.settings.emoji`)
-    const msg = await message.channel.getMessage(message.id)
-    if ((reaction.id == null && emoji.unemojify(reaction.name) === `:${emote}:`) || (reaction.id != null && `<:${reaction.name}:${reaction.id}>` === emote)) {
-      db.subtract(`${message.channel.guild.id}.starboard.count.${message.id}`, 1)
-      const c = db.fetch(`${message.channel.guild.id}.starboard.count.${message.id}`)
-      const min = db.fetch(`${message.channel.guild.id}.starboard.settings.minimum`)
-      const starMsg = db.fetch(`${message.channel.guild.id}.starboard.posted.${message.id}`)
-      const starChannel = await message.channel.guild.channels.get(db.fetch(`${message.channel.guild.id}.starboard.settings.channel`))
-      if (starMsg == null) return
-      const starBMsg = await starChannel.getMessage(starMsg)
-      try {
-        if (starMsg != null && c < min) {
-          starChannel.deleteMessage(starBMsg.id)
-          return db.delete(`${message.channel.guild.id}.starboard.posted.${message.id}`)
-        } else if (starMsg != null && c >= min) return await this._client.editMessage(starBMsg, await populateEmbed(message, msg))
-      } catch (e) {
-        this.logger.error(e)
-      }
-    }
-  }
 }
 
-let embed = {
-  'embed': {}
+const embed = {
+  embed: {}
 }
 
 async function populateEmbed (message, msg) {
@@ -93,30 +71,28 @@ async function populateEmbed (message, msg) {
     embed.embed.color = 0xFFC300
     embed.embed.title = `${c} ${emote}`
     embed.embed.timestamp = new Date()
-    embed.embed.footer = { 'icon_url': msg.author.avatarURL, 'text': `${msg.author.username} in #${msg.channel.name}` }
-    embed.embed.image = { 'url': image }
+    embed.embed.footer = { icon_url: msg.author.avatarURL, text: `${msg.author.username} in #${msg.channel.name}` }
+    embed.embed.image = { url: image }
     if (msg.content !== '') embed.embed.description = msg.content
   } else if (min === false) {
     embed.embed.color = 0xFFC300
     embed.embed.title = `${c} ${emote}`
     embed.embed.timestamp = new Date()
-    embed.embed.footer = { 'text': msg.id }
-    embed.embed.thumbnail = { 'url': msg.author.avatarURL }
-    embed.embed.image = { 'url': image }
+    embed.embed.footer = { text: msg.id }
+    embed.embed.thumbnail = { url: msg.author.avatarURL }
+    embed.embed.image = { url: image }
     embed.embed.fields = [
-      { 'name': 'Author', 'value': msg.author.mention, 'inline': true },
-      { 'name': 'Channel', 'value': msg.channel.mention, 'inline': true },
-      { 'name': 'Jump to message', 'value': `[Jump](https://discordapp.com/channels/${message.channel.guild.id}/${msg.channel.id}/${msg.id})`, 'inline': true }
+      { name: 'Author', value: msg.author.mention, inline: true },
+      { name: 'Channel', value: msg.channel.mention, inline: true },
+      { name: 'Jump to message', value: `[Jump](https://discordapp.com/channels/${message.channel.guild.id}/${msg.channel.id}/${msg.id})`, inline: true }
     ]
     if (msg.content !== '') {
       embed.embed.fields.push({
-        'name': 'Content',
-        'value': msg.content,
-        'inline': true
+        name: 'Content',
+        value: msg.content,
+        inline: true
       })
     }
   }
   return embed
 }
-
-module.exports = reactionHandler
