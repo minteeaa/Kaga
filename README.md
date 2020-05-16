@@ -1,7 +1,6 @@
 <img src="img/kaga-gh.png" align="center"></img>
 <h3 align="center">A quick, multipurpose bot for discord.</h3>
 <p align="center">
-<<<<<<< Updated upstream
     <a title="DavidDM" href="https://david-dm.org/zetari/chiya.svg"><img src="https://img.shields.io/david/zetari/chiya.svg?style=flat" alt="DavidDM">
     <a title="Code Style" href="https://standardjs.com/"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Code Style">
     <a title="License" href="https://github.com/zetari/chiya/blob/master/LICENSE"><img src="https://img.shields.io/github/license/zetari/chiya.svg" alt="License"></a>
@@ -9,7 +8,6 @@
     <a title="DavidDM" href="https://david-dm.org/minteeaa/kaga"><img src="https://img.shields.io/david/minteeaa/kaga.svg?style=flat-square" alt="DavidDM">
     <a title="Code Style" href="https://standardjs.com/"><img src="https://img.shields.io/badge/code_style-standard-blue.svg?style=flat-square" alt="Code Style">
     <a title="License" href="https://github.com/minteeaa/kaga/blob/master/LICENSE"><img src="https://img.shields.io/github/license/minteeaa/kaga.svg?style=flat-square" alt="License"></a>
->>>>>>> Stashed changes
 </p>
 
 ---
