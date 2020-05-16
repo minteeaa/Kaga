@@ -42,13 +42,8 @@ You're interested, I see. In accordance with the license, you can help me build 
 ### Installation
 Clone the repo, either by downloading it or using the git command.
 ```
-<<<<<<< Updated upstream
-$ git clone https://github.com/zetari/chiya.git
-$ cd chiya/
-=======
 $ git clone https://github.com/minteeaa/kaga.git
 $ cd kaga/
->>>>>>> Stashed changes
 $ npm i
 ```
 
@@ -88,11 +83,7 @@ $ pm2 monit
 ```
 
 # License and the Author
-<<<<<<< Updated upstream
-**Chiya** © [Zetari](https://github.com/zetari)
-=======
 **Kaga** © [mintea](https://github.com/minteeaa)
->>>>>>> Stashed changes
 
 Under the [AGPL-3.0 License](https://opensource.org/licenses/AGPL-3.0).
 
