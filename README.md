@@ -87,6 +87,6 @@ $ pm2 monit
 
 Under the [AGPL-3.0 License](https://opensource.org/licenses/AGPL-3.0).
 
-Made with ❤️ and a lot of coffee by Zetari.
+Made with ❤️ and a lot of coffee by mintea.
 
-> Github: [Zetari](https://github.com/zetari) | Twitter: [@Zetari](https://twitter.com/zetari_/) | Discord: ***mintea#0001***
+> Github: [minteeaa](https://github.com/minteeaa) | Twitter: [@minteaseu](https://twitter.com/minteaseu/) | Discord: ***mintea#0001***
