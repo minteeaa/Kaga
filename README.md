@@ -44,9 +44,7 @@ Clone the repo, either by downloading it or using the git command.
 ```
 $ git clone https://github.com/minteeaa/kaga.git
 $ cd kaga/
-$ npm i
 ```
-
 ### Code styling
 Please, make my life easier by using the [StandardJS](https://standardjs.com/) code style. It has installations for Atom, VSCode, Sublime Text, or whatever code editor you use. I have also added a dependency in the package for the StandardJS server to use incase addons aren't your thing. I do this to keep code clean, and if you don't stick to it, it will be up to me to clean any PRs and additions before adding them.
 
