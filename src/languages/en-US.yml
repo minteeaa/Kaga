@@ -1,0 +1,15 @@
+commands:
+  ping:
+    pong: Pong!
+    pongEdit: |-
+      Pong!
+      **Latency** | $1ms
+      **Heartbeat** | $2ms
+  help:
+    generalEmbedTitle: $1's commands
+    generalEmbedFooter: Requested by $1
+    commandEmbedTitle: $1 command documentation
+    commandEmbedGroup: GROUP
+    commandEmbedDescription: DESCRIPTION
+    commandEmbedUsage: USAGE
+    commandNotFound: That command does not exist!
