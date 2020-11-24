@@ -8,16 +8,16 @@
 
 ---
 
-Kaga is a discord bot created in Node.JS using the [Klasa](https://github.com/dirigeants/klasa) framework. Said framework relies on [Discord.js](https://discord.js.org/). It's a nice break from my schoolwork and it helps me learn JavaScript on my free time.
+Kaga is a discord bot created in Node.JS using the [Akairo](https://discord-akairo.github.io/#/) framework.
 
 ## Dev dependencies
 * [Node.JS](https://nodejs.org/) (and clearly [NPM](https://www.npmjs.com) too)
-* [Klasa](https://github.com/dirigeants/klasa), the framework the bot is built on.
+* [Akairo](https://discord-akairo.github.io/#/), the framework the bot is built on.
 * [StandardJS](https://standardjs.com/), the code style I use.
 * [PM2](https://pm2.keymetrics.io/), a process manager for applications.
 
 ## Invite Kaga to your server
-Well, as of right now, you can't. I spend a lot of time developing this bot to make it production ready and even at that, it still has bugs I find. As I try to add features as quickly as possible, I also encounter bugs at the same rate. I don't know how long it will take to fix all these bugs and add all the features I would like, but when I do, this bot will become public.
+Well, as of right now, you can't. I spend a lot of time developing this bot to make it production ready and even at that, it still has bugs I find. As I try to add features as quickly as possible, I also encounter bugs at the same rate. I don't know how long it will take to fix all these bugs and add all the features I would like, but when I do, this bot will become public, and the repo license will probably change to reflect that.
 
 ## The repo
 I need a place to store this bot incase of any losses on my local end. It also helps with the organization of coding across multiple devices. Along with this, Kaga is free to use for your own server, or even to use for your own project. Please do give some credit to me somewhere in the project, though. The license is a thing and I have no issue taking copies of this repo down in accordance with it.
@@ -53,9 +53,8 @@ Please, make my life easier by using the [StandardJS](https://standardjs.com/) c
 ## Setup and launch
 Navigate to the repository folder and fill out the `.env.example` file accordingly. (it's pretty empty as of now... but that will change.)
 ```
-# Bot keys
-
 TOKEN=
+OWNERID=
 ```
 Rename the example file to `.env`.
 

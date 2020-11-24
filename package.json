@@ -1,20 +1,25 @@
 {
   "name": "kaga",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "bot.",
-  "main": "index.js",
+  "main": "./src/kaga.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mintea",
   "license": "AGPL-3.0",
   "dependencies": {
+    "chalk": "^4.1.0",
+    "discord-akairo": "^8.1.0",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
-    "klasa": "github:dirigeants/klasa",
-    "moment": "^2.24.0",
+    "file-system": "^2.2.2",
+    "js-yaml": "^3.14.0",
+    "moment": "^2.29.1",
     "moment-timezone": "^0.5.28",
     "quick.db": "^7.0.0-b22",
-    "randomcolor": "^0.5.4"
+    "randomcolor": "^0.5.4",
+    "readdirp": "^3.5.0",
+    "util": "^0.12.3"
   }
 }
