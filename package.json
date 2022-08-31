@@ -16,7 +16,7 @@
     "file-system": "^2.2.2",
     "js-yaml": "^3.14.0",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "quick.db": "^7.0.0-b22",
     "randomcolor": "^0.5.4",
     "readdirp": "^3.5.0",
